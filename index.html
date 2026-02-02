@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VisualDSA</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>VisualDSA</h1>
+    <p>Visualizing core Data Structures for a better DSA learning</p>
+  </header>
+
+  <main class="container">
+    <!---------------------------- STACK SECTION ------------------------------>
+    <section class="ds-section">
+      <h2>Stack (LIFO)</h2>
+      <div class="controls">
+        <input type="number" id="stackInput" placeholder="Enter value">
+        <button id="pushBtn">Push</button>
+        <button id="popBtn">Pop</button>
+        <button id="peekBtn">Peek</button>
+      </div>
+      <div class="visual-area">
+        <button class="clear-btn" data-target="stack" title="Clear">✕</button>
+        <div class="stack-container" id="stackContainer">
+          <!-- Stack elements will appear here -->
+        </div>
+      </div>
+      <p class="message" id="stackMessage"></p>
+    </section>
+
+    <!---------------------- QUEUE SECTION ------------------------------->
+    <section class="ds-section">
+      <h2>Queue (FIFO)</h2>
+
+      <div class="controls">
+        <input type="number" id="queueInput" placeholder="Enter value">
+        <button id="enqueueBtn">Enqueue</button>
+        <button id="dequeueBtn">Dequeue</button>
+      </div>
+
+      <div class="visual-area">
+        <button class="clear-btn" data-target="queue" title="Clear">✕</button>
+        <div class="queue-container" id="queueContainer">
+          <!-- Queue elements will appear here -->
+        </div>
+      </div>
+      <div class="queue-info">
+        <span id="frontIndicator">Front</span>
+        <span id="rearIndicator">Rear</span>
+      </div>
+      <p class="message" id="queueMessage"></p>
+    </section>
+
+    <!-----------------------LINKED LIST SECTION-------------------->
+    <section class="ds-section linked-list">
+      <h2>Linked List</h2>
+      <!-- Inputs -->
+      <div class="ll-inputs">
+        <input type="number" id="llValue" placeholder="Value">
+        <input type="number" id="llPosition" placeholder="Position (0 index-based)">
+      </div>
+      <!-- Insert Operations -->
+      <div class="ll-group">
+        <h4>Insert</h4>
+        <div class="control-grid">
+          <button id="insertHead">Head</button>
+          <button id="insertTail">Tail</button>
+          <button id="insertPos">Position</button>
+        </div>
+      </div>
+      <!-- Delete Operations -->
+      <div class="ll-group">
+        <h4>Delete</h4>
+        <div class="control-grid">
+          <button id="deleteHead">Head</button>
+          <button id="deleteTail">Tail</button>
+          <button id="deletePos">Position</button>
+        </div>
+      </div>
+      <!-- Traverse -->
+      <div class="ll-group">
+        <h4>Traversal</h4>
+          <div class="control-grid single">
+            <button class="full-btn" id="traverse">Traverse</button>
+          </div>
+      </div>
+      <!-- Visualization -->
+      <div class="visual-area">
+        <button class="clear-btn" data-target="linkedlist" title="Clear">✕</button>
+        <div id="linkedListContainer" class="linkedlist-container"></div>
+      </div>
+      <p class="message" id="llMessage"></p>
+    </section>
+
+    <!-------------------BINARY TREE----------------------------->
+    <section class="ds-section tree">
+      <h2>Binary Search Tree</h2>
+      <!-- Inputs -->
+      <div class="ll-inputs">
+        <input type="number" id="treeValue" placeholder="Value">
+        <!-- <input type="number" id="treePosition" placeholder="Position (0 index-based)"> -->
+      </div>
+      <!-- Insert -->
+      <div class="ll-group">
+        <h4>Insert</h4>
+          <div class="control-grid single">
+            <button id="insertTree">Insert</button>
+          </div>
+      </div>
+      <!-- Delete -->
+      <div class="ll-group">
+        <h4>Delete</h4>
+        <div class="control-grid single">
+          <button id="deleteTree">Delete</button>
+        </div>
+      </div>
+      <!-- Traversal Operations -->
+      <div class="ll-group">
+        <h4>Traversal</h4>
+        <div class="control-grid">
+          <button id="preorderBtn" title="ROOT → LEFT → RIGHT">Pre-Order</button>
+          <button id="inorderBtn" title="LEFT → ROOT → RIGHT">In-Order</button>
+          <button id="postorderBtn" title="LEFT → RIGHT → ROOT">Post-Order</button>
+        </div>
+      </div>
+      <!-- Visualization -->
+      <div class="visual-area">
+        <button class="clear-btn" data-target="bst" title="Clear">✕</button>
+        <div class="traversal-output" id="bstOutput"></div>
+        <div id="treeContainer" class="linkedlist-container"></div>
+      </div>
+      <p class="message" id="btMessage"></p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Built for DSA Visualization • HTML, CSS & JavaScript</p>
+  </footer>
+
+  <script src="index.js"></script>
+</body>
+</html>
+

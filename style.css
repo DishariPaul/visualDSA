@@ -1,0 +1,608 @@
+:root {
+  --bg: #000000;        
+  --card: #090040;        
+  --text: #e2e8f0;        
+  --primary: #07577c;     
+  --stack: #18b57b;       
+  --queue: #fb821e; 
+  --stack-hover: #64e78d;
+  --queue-hover: #f4b135;
+  --linkedlist: #ece35a;
+  --linkedlist-hover: #ecc35a;
+  --tree1: #22c55e;
+  --tree2: #4ade80;
+  --tree-hover: #22c55ecc;
+  --border: #373063;    
+  --danger: #f85353;     
+}
+
+
+
+/* ===== Reset & Base ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+/* ===== Header ===== */
+header {
+  text-align: center;
+  padding: 20px;
+  background-color: #050E3C;
+  color: white;
+}
+header h1 {font-size: 2.5rem;}
+header p {
+  margin-top: 6px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* ===== Layout ===== */
+.container {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0 15px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+/* ===== Section ===== */
+.ds-section {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+.ds-section h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #b8cef1;
+}
+.clear-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: #e5e7eb;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.clear-btn:hover {
+  background: #ef4444;
+  color: white;
+  transform: scale(1.1);
+}
+
+/* ===== Controls ===== */
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+.controls input {
+  flex: 1;
+  min-width: 140px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+.controls button {
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: var(--primary);
+  color: white;
+  transition: all 0.2s ease;
+}
+.controls button:hover {
+  transform: scale(1.05);
+  background-color: #1ec9ba;
+}
+.controls.linkedlist{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.control-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.control-grid.single {
+  grid-template-columns: 1fr;
+}
+.control-grid.two {
+  grid-template-columns: repeat(2, 1fr);
+}
+.full-btn {
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+}
+.control-grid button, .full-btn {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.control-grid button:hover , .full-btn:hover {
+  transform: scale(1.05);
+  background-color: #1ec9ba;
+}
+
+
+/* ===== Visual Area ===== */
+.visual-area {
+  position: relative;
+  min-height: 220px;
+  margin-top: 30px;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+/* ==================================== STACK =============================== */
+.stack-container {
+  display: flex;
+  flex-direction: column-reverse;   /*stack logic*/
+  max-height: 100%;
+  overflow-y: auto;
+  gap: 6px;
+  padding-bottom: 10px;
+}
+.stack-item {
+  width: 100px;
+  padding: 8px;
+  background-color: var(--stack);
+  color: #010620;
+  text-align: center;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  animation: stackDrop 0.6s cubic-bezier(.34, 1.56, .64, 1);
+}
+.stack-item:hover{
+  background-color: var(--stack-hover);
+  border-radius: 5px;
+  transform: scale(1.05);
+}
+.stack-item.removing{
+  animation: stackLift 0.3s ease forwards;
+}
+/*Bouncy Drop on Push*/
+@keyframes stackDrop{
+  0%{
+    transform: translateY(-80px) scale(0.8);
+    opacity: 0;
+  }
+  60%{
+    transform: translateY(10px) scale(1.05);
+    opacity: 1;
+  }
+  80%{
+    transform: translateY(-6px) scale(0.90);
+  }
+  100%{
+    transform: translateY(0) scale(1);
+  }
+}
+/*Lift Up on Pop*/
+@keyframes stackLift{
+  to{
+    transform: translateY(-40px) scale(0.9);
+    opacity: 0;
+  }
+}
+
+
+/* ================================== QUEUE ======================================= */
+.queue-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+.queue-item {
+  width: 80px;
+  padding: 8px;
+  background-color: var(--queue);
+  color: #010620;
+  text-align: center;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  animation: queueBounce 0.55s cubic-bezier(.34,1.56,.64,1);
+}
+.queue-item:hover {
+  background-color: var(--queue-hover);
+  border-radius: 5px;
+  transform: scale(1.05);
+}
+.queue-item.removing {
+  animation: queueExit 0.3s ease forwards;
+}
+/*Bouncy add on Enqueue*/
+@keyframes queueBounce{
+  0%{
+    transform: translateX(60px) scale(0.85);
+    opacity: 0;
+  }
+  70%{
+    transform: translateX(-6px) scale(1.05);
+    opacity: 1;
+  }
+  100%{
+    transform: translateX(0) scale(1);
+  }
+}
+/*Animated exit on Dequeue*/
+@keyframes queueExit{
+  to{
+    transform: translateX(-50px) scale(0.9);
+    opacity: 0;
+  }
+}
+
+
+/* ====STACK & QUEUE==== */
+.stack-container, .queue-container{ padding: 50px 10px 80px 10px;}
+.stack-item, .queue-item {box-shadow: 0 5px 6px rgba(0, 0, 0, 0.197);}
+.stack-container::-webkit-scrollbar, .queue-container::-webkit-scrollbar {height: 6px;}
+.stack-container::-webkit-scrollbar-track, .queue-container::-webkit-scrollbar-track {background: transparent;}
+
+/* ===== Queue Info ===== */
+.queue-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #637c9f;
+}
+
+
+/* =====================================LINKED LISTS===================================*/
+.linked-list h4 {
+  margin: 12px 0 6px;
+  font-size: 0.9rem;
+  color: var(--text);
+  opacity: 0.85;
+}
+.ll-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+#llValue, #llPosition{
+  border-radius: 6px;
+  padding: 10px;
+}
+.ll-group {margin-bottom: 12px;}
+.ll-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(80px, 150px));
+  gap: 15px;
+}
+.linkedlist-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 80px 20px;
+  overflow-x: auto !important;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+.ll-group {margin-bottom: 18px;}
+.ll-group h4 {margin-bottom: 8px;}
+.ll-head {
+  font-size: 1rem;
+  color: #22c55e;
+  font-weight: bold;
+  padding-right: 10px;
+}
+.ll-node {
+  display: flex;
+  border: 2px solid var(--linkedlist);
+  border-radius: 6px;
+  background: var(--linkedlist);
+  font-weight: bold;
+  color: #010620;
+  animation: llInsert 0.35s ease-out;
+  transition: all 0.2s ease;
+  box-shadow: 0px 5px 6px rgba(32, 1, 1, 0.329);
+}
+@keyframes llInsert{
+  from{
+    transform: scale(0.8) translateY(-10px);
+    opacity: 0;
+  }
+  to{
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+.ll-node.removing{
+  animation: llDelete 0.3s ease-in forwards;
+}
+@keyframes llDelete{
+  to{
+    transform: scale(0.7);
+    opacity: 0;
+  }
+}
+.ll-data {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  border-right: 2px solid #d5c709;
+}
+.ll-next {
+  padding: 8px 10px;
+  font-size: 1rem;
+}
+.ll-arrow {
+  font-size: 1.4rem;
+  color: #fff;
+}
+.ll-null {
+  font-size: 1rem;
+  padding-left: 10px;
+  color: #f87171;
+  font-weight: bold;
+}
+.ll-pointer {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ef4444;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+  animation: pointerBounce 0.6s infinite alternate;
+}
+@keyframes pointerBounce {
+  from { transform: translate(-50%, 0); }
+  to   { transform: translate(-50%, -6px); }
+}
+.ll-node.active {
+  background-color: #e9b10a;
+  color: #000;
+  box-shadow: 0 0 15px rgba(3, 30, 35, 0.529);
+  transform: scale(1.08);
+}
+.ll-node:hover{
+  transform: scale(1.05);
+  cursor: pointer;
+  background-color: var(--linkedlist-hover);
+}
+.linkedlist-container::-webkit-scrollbar {height: 6px;}
+.linkedlist-container::-webkit-scrollbar-track {
+  background: transparent;
+  /* background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px; */
+}
+/* .linkedlist-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #22d3ee, #38bdf8);
+  border-radius: 10px;
+}
+.linkedlist-container::-webkit-scrollbar-thumb:hover {background: var(--primary);} */
+
+.ds-section.linked-list .visual-area {
+  display: block;          /*NOT flex */
+  overflow-x: auto;        /*allow scrolling */
+  overflow-y: hidden;
+}
+
+
+/* ===== Messages ===== */
+.message {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1rem;
+  color: var(--danger);
+}
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  padding: 15px;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  .controls {
+    flex-direction: column;
+    
+  }
+  .stack-item {width: 100%;}
+  .queue-container {flex-wrap: wrap;}
+}
+
+
+/* ===================================== BINARY TREE ===================================*/
+/* .bst-info {
+  margin-top: 16px;
+  padding: 12px;
+}
+.bst-status {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-bottom: 6px;
+}
+.bst-output {
+  font-size: 0.95rem;
+  color: #f87171; 
+  font-weight: 600;
+  word-wrap: break-word;
+} */
+#treeValue{
+  border-radius: 6px;
+  padding: 10px;
+}
+.tree-area {
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  border-radius: 12px;
+  padding: 30px;
+  overflow-x: auto;
+  padding: 20px;
+}
+.tree-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.tree-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 45px;
+  width: 2px;
+  height: 25px;
+  background: #64748b;
+}
+.tree-level {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 40px;
+}
+.tree-children {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  width: max-content;
+  margin-top: 50px;
+  position: relative;
+}
+.tree-children::before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: #64748b;
+  transform: translateX(-50%);
+}
+/* .tree-child{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.tree-child.left::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 0;
+  width: 80px;
+  height: 2px;
+  background: #64748b;
+  transform: rotate(-35deg);
+  transform-origin: right;
+}
+.tree-child.right::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 0;
+  width: 80px;
+  height: 2px;
+  background: #64748b;
+  transform: rotate(35deg);
+  transform-origin: left;
+} */
+.tree-node {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--tree1), var(--tree2));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #010620;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  z-index: 2;
+}
+.tree-node:hover {
+  transform: scale(1.12);
+  box-shadow: 0 0 25px var(--tree-hover);
+  cursor: pointer;
+}
+.tree-node.active {
+  background: rgb(85, 255, 0);
+  color: black;
+  box-shadow: 0 0 30px rgb(0, 255, 51);
+}
+.tree-node.deleting {
+  background: #ef4444;             
+  color: white;
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.9);
+  transform: scale(1.15);
+  animation: deleteFade 0.4s ease forwards;
+}
+@keyframes deleteFade {
+  0% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+.tree-node.traversing{
+  background: #38bdf8;
+  color: #5b6ec3;
+  box-shadow: 0 0 25px #38bdf8;
+  transform: scale(1.15);
+}
+.traversal-output {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: #e5e7eb;
+  min-height: 20px;
+}
+
+
